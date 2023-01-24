@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using MovieStore.API.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,6 +96,13 @@ namespace MovieStore.API.Repositories
                 return movies;
             }
             return null;
+        }
+
+        //Get Genres
+        public async Task<IEnumerable<Genre>> GetGenres()
+        {
+            var genres = await _context.Genres.ToListAsync();
+            return genres;
         }
     }
 }

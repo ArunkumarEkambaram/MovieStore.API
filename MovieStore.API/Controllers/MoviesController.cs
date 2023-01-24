@@ -86,6 +86,14 @@ namespace MovieStore.API.Controllers
             }
             return NotFound("Movie not found");
         }
+
+        [HttpGet("GetGenres")]
+        //Get Genres
+        public async Task<IActionResult> GetGenres()
+        {
+            var gernes = await _movieRepository.GetGenres();
+            return Ok(gernes);
+        }
     }
 
 }

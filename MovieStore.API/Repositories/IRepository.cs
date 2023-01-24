@@ -22,5 +22,7 @@ namespace MovieStore.API.Repositories
     public interface IMovieRepository
     {
         Task<IEnumerable<Movie>> SearchByGenre(string genreName);
+
+        Task<IEnumerable<Genre>> GetGenres();
     }
 }
