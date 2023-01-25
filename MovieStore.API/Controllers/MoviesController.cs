@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieStore.API.Models;
 using MovieStore.API.Repositories;
 using System.Collections.Generic;
@@ -50,6 +51,7 @@ namespace MovieStore.API.Controllers
             return NotFound("Please provide valid genre");
         }
 
+        [Authorize(Roles ="admin, employee")]
         [HttpPost("CreateMovie")]
         public async Task<IActionResult> CreateMovie([FromBody] Movie movie)
         {
@@ -61,6 +63,7 @@ namespace MovieStore.API.Controllers
             return CreatedAtRoute("GetMovieById", new { id = movie.Id }, movie);
         }
 
+        [Authorize(Roles = "admin, employee")]
         [HttpPut("UpdateMovie/{id}")]
         public async Task<IActionResult> UpdateMovie(int id, [FromBody] Movie movie)
         {
@@ -76,6 +79,7 @@ namespace MovieStore.API.Controllers
             return NotFound("Movie not found");
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete("DeleteMovie/{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {

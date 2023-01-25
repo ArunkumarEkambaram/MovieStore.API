@@ -88,11 +88,20 @@ namespace MovieStore.API.Repositories
             return null;
         }
 
-        public async Task<IEnumerable<Movie>> SearchByGenre(string genreName)
+        public async Task<IEnumerable<MovieDto>> SearchByGenre(string genreName)
         {
             if (!string.IsNullOrWhiteSpace(genreName))
             {
-                var movies = await _context.Movies.Include(x => x.Genre).Where(x => x.Genre.GenreName.Contains(genreName)).ToListAsync();
+                var moviesWithGenre = await _context.Movies.Include(x => x.Genre).Select(x => new MovieDto
+                {
+                    Id = x.Id,
+                    MovieName = x.MovieName,
+                    ProductionName = x.ProductionName,
+                    ReleaseDate = x.ReleaseDate,
+                    GenreId = x.GenreId,
+                    GenreName = x.Genre.GenreName
+                }).ToListAsync();
+                var movies = moviesWithGenre.Where(x => x.GenreName.Contains(genreName)).ToList();
                 return movies;
             }
             return null;
