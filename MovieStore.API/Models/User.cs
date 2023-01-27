@@ -1,20 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace MovieStore.API.Models
 {
-    public class User : LoginModel
+    public class User 
     {
         public int Id { get; set; }
 
         [Required]
+        public string Username { get; set; }
+
+        [Required]
         public string EmailId { get; set; }
 
-       // [Required] 
         public byte[] PasswordSalt { get; set; }
 
-       // [Required]
         public byte[] PasswordHash { get; set; }
 
         [Required]
@@ -24,16 +26,12 @@ namespace MovieStore.API.Models
         public string Role { get; set; }
     }
 
-    public class LoginModel
+    public class LoginDto
     {
         [Required]
-        //[Column(TypeName = "varchar")]
         public string Username { get; set; }
 
-        [IgnoreDataMember]
         [Required]
-        [Column(TypeName = "varchar")]
-        [StringLength(100)]
         public string Password { get; set; }
     }
 }
